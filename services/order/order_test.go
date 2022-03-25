@@ -1,4 +1,4 @@
-package services
+package order
 
 import (
 	"github.com/elwafa/tavern/domain/customer"
