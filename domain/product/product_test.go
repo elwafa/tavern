@@ -1,6 +1,8 @@
-package aggregate
+package product
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestProduct_NewProduct(t *testing.T) {
 	type testCase struct {

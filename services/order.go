@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"github.com/elwafa/tavern/aggregate"
 	"github.com/elwafa/tavern/domain/customer"
 	"github.com/elwafa/tavern/domain/customer/memory"
 	"github.com/elwafa/tavern/domain/customer/mongo"
@@ -63,7 +62,7 @@ func (o *OrderService) CreateOrder(customerID uuid.UUID, productIDs []uuid.UUID)
 	}
 
 	// Get each Product, Ouchie, We need a ProductRepository
-	var products []aggregate.Product
+	var products []product.Product
 	var price float64
 	for _, id := range productIDs {
 		p, err := o.products.GetByID(id)
@@ -81,7 +80,7 @@ func (o *OrderService) CreateOrder(customerID uuid.UUID, productIDs []uuid.UUID)
 }
 
 // WithMemoryProductRepository adds a in memory product repo and adds all input products
-func WithMemoryProductRepository(products []aggregate.Product) OrderConfiguration {
+func WithMemoryProductRepository(products []product.Product) OrderConfiguration {
 	return func(os *OrderService) error {
 		// Create the memory repo, if we needed parameters, such as connection strings they could be inputted here
 		pr := prodmemory.New()

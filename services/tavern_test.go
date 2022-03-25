@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/elwafa/tavern/aggregate"
+	"github.com/elwafa/tavern/domain/customer"
 	"github.com/google/uuid"
 	"testing"
 )
@@ -23,7 +23,7 @@ func Test_Tavern(t *testing.T) {
 		t.Error(err)
 	}
 
-	cust, err := aggregate.NewCustomer("Percy")
+	cust, err := customer.NewCustomer("Percy")
 	if err != nil {
 		t.Error(err)
 	}
@@ -60,7 +60,7 @@ func Test_MongoTavern(t *testing.T) {
 		t.Error(err)
 	}
 
-	cust, err := aggregate.NewCustomer("Percy")
+	cust, err := customer.NewCustomer("Percy")
 	if err != nil {
 		t.Error(err)
 	}

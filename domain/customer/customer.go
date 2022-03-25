@@ -1,10 +1,9 @@
-// Package aggregates holds aggregates that combines many entities into a full object
-package aggregate
+// Package customer holds aggregates that combines many entities into a full object
+package customer
 
 import (
 	"errors"
-	"github.com/elwafa/tavern/entity"
-	"github.com/elwafa/tavern/valueobject"
+	"github.com/elwafa/tavern"
 	"github.com/google/uuid"
 )
 
@@ -17,11 +16,11 @@ var (
 type Customer struct {
 	// person is the root entity of a customer
 	// which means the person.ID is the main identifier for this aggregate
-	person *entity.Person
+	person *tavern.Person
 	// a customer can hold many products
-	products []*entity.Item
+	products []*tavern.Item
 	// a customer can perform many transactions
-	transactions []valueobject.Transaction
+	transactions []tavern.Transaction
 }
 
 // NewCustomer is a factory to create a new Customer aggregate
@@ -33,15 +32,15 @@ func NewCustomer(name string) (Customer, error) {
 	}
 
 	// Create a new person and generate ID
-	person := &entity.Person{
+	person := &tavern.Person{
 		Name: name,
 		ID:   uuid.New(),
 	}
 	// Create a customer object and initialize all the values to avoid nil pointer exceptions
 	return Customer{
 		person:       person,
-		products:     make([]*entity.Item, 0),
-		transactions: make([]valueobject.Transaction, 0),
+		products:     make([]*tavern.Item, 0),
+		transactions: make([]tavern.Transaction, 0),
 	}, nil
 }
 
@@ -69,6 +68,6 @@ func (c *Customer) GetName() string {
 
 func (c *Customer) checkPerson() {
 	if c.person == nil {
-		c.person = &entity.Person{}
+		c.person = &tavern.Person{}
 	}
 }
