@@ -108,3 +108,18 @@ func WithMongoCustomerRepository(connectionString string) OrderConfiguration {
 		return nil
 	}
 }
+
+// AddCustomer will add a new customer and return the customerID
+func (o *OrderService) AddCustomer(name string) (uuid.UUID, error) {
+	c, err := customer.NewCustomer(name)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	// Add to Repo
+	err = o.customers.Add(c)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	return c.GetID(), nil
+}

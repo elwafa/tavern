@@ -1,19 +1,38 @@
 package tavern
 
 import (
-	"github.com/elwafa/tavern/domain/customer"
-	order2 "github.com/elwafa/tavern/services/order"
+	"github.com/elwafa/tavern/domain/product"
+	"github.com/elwafa/tavern/services/order"
 	"github.com/google/uuid"
 	"testing"
 )
 
+func init_products(t *testing.T) []product.Product {
+	beer, err := product.NewProduct("Beer", "Healthy Beverage", 1.99)
+	if err != nil {
+		t.Error(err)
+	}
+	peenuts, err := product.NewProduct("Peenuts", "Healthy Snacks", 0.99)
+	if err != nil {
+		t.Error(err)
+	}
+	wine, err := product.NewProduct("Wine", "Healthy Snacks", 0.99)
+	if err != nil {
+		t.Error(err)
+	}
+	products := []product.Product{
+		beer, peenuts, wine,
+	}
+	return products
+}
+
 func Test_Tavern(t *testing.T) {
 	// Create OrderService
-	products := order2.init_products(t)
+	products := init_products(t)
 
-	os, err := order2.NewOrderService(
-		order2.WithMemoryCustomerRepository(),
-		order2.WithMemoryProductRepository(products),
+	os, err := order.NewOrderService(
+		order.WithMemoryCustomerRepository(),
+		order.WithMemoryProductRepository(products),
 	)
 	if err != nil {
 		t.Error(err)
@@ -24,12 +43,7 @@ func Test_Tavern(t *testing.T) {
 		t.Error(err)
 	}
 
-	cust, err := customer.NewCustomer("Percy")
-	if err != nil {
-		t.Error(err)
-	}
-
-	err = os.customers.Add(cust)
+	uid, err := os.AddCustomer(`precy`)
 	if err != nil {
 		t.Error(err)
 	}
@@ -37,7 +51,7 @@ func Test_Tavern(t *testing.T) {
 		products[0].GetID(),
 	}
 	// Execute Order
-	err = tavern.Order(cust.GetID(), order)
+	err = tavern.Order(uid, order)
 	if err != nil {
 		t.Error(err)
 	}
@@ -46,11 +60,11 @@ func Test_Tavern(t *testing.T) {
 
 func Test_MongoTavern(t *testing.T) {
 	// Create OrderService
-	products := order2.init_products(t)
+	products := init_products(t)
 
-	os, err := order2.NewOrderService(
-		order2.WithMongoCustomerRepository("mongodb://localhost:27017"),
-		order2.WithMemoryProductRepository(products),
+	os, err := order.NewOrderService(
+		order.WithMongoCustomerRepository("mongodb://localhost:27017"),
+		order.WithMemoryProductRepository(products),
 	)
 	if err != nil {
 		t.Error(err)
@@ -61,12 +75,7 @@ func Test_MongoTavern(t *testing.T) {
 		t.Error(err)
 	}
 
-	cust, err := customer.NewCustomer("Percy")
-	if err != nil {
-		t.Error(err)
-	}
-
-	err = os.customers.Add(cust)
+	uid, err := os.AddCustomer("Percy")
 	if err != nil {
 		t.Error(err)
 	}
@@ -74,9 +83,8 @@ func Test_MongoTavern(t *testing.T) {
 		products[0].GetID(),
 	}
 	// Execute Order
-	err = tavern.Order(cust.GetID(), order)
+	err = tavern.Order(uid, order)
 	if err != nil {
 		t.Error(err)
 	}
-
 }
