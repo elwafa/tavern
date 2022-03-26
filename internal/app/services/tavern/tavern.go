@@ -1,7 +1,7 @@
 package tavern
 
 import (
-	"github.com/elwafa/tavern/services/order"
+	"github.com/elwafa/tavern/internal/app/services/order"
 	"github.com/google/uuid"
 	"log"
 )

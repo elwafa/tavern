@@ -1,14 +1,14 @@
 package memory
 
 import (
-	"github.com/elwafa/tavern/domain/product"
+	product2 "github.com/elwafa/tavern/internal/app/domain/product"
 	"github.com/google/uuid"
 	"testing"
 )
 
 func TestMemoryProductRepository_Add(t *testing.T) {
 	repo := New()
-	product, err := product.NewProduct("Beer", "Good for you're health", 1.99)
+	product, err := product2.NewProduct("Beer", "Good for you're health", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
@@ -20,7 +20,7 @@ func TestMemoryProductRepository_Add(t *testing.T) {
 }
 func TestMemoryProductRepository_Get(t *testing.T) {
 	repo := New()
-	existingProd, err := product.NewProduct("Beer", "Good for you're health", 1.99)
+	existingProd, err := product2.NewProduct("Beer", "Good for you're health", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
@@ -44,7 +44,7 @@ func TestMemoryProductRepository_Get(t *testing.T) {
 		}, {
 			name:        "Get non-existing product by id",
 			id:          uuid.New(),
-			expectedErr: product.ErrProductNotFound,
+			expectedErr: product2.ErrProductNotFound,
 		},
 	}
 
@@ -61,7 +61,7 @@ func TestMemoryProductRepository_Get(t *testing.T) {
 }
 func TestMemoryProductRepository_Delete(t *testing.T) {
 	repo := New()
-	existingProd, err := product.NewProduct("Beer", "Good for you're health", 1.99)
+	existingProd, err := product2.NewProduct("Beer", "Good for you're health", 1.99)
 	if err != nil {
 		t.Error(err)
 	}

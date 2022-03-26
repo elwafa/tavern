@@ -1,8 +1,8 @@
 package order
 
 import (
-	"github.com/elwafa/tavern/domain/customer"
-	"github.com/elwafa/tavern/domain/product"
+	"github.com/elwafa/tavern/internal/app/domain/customer"
+	"github.com/elwafa/tavern/internal/app/domain/product"
 	"github.com/google/uuid"
 	"testing"
 )

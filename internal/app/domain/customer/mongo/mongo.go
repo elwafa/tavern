@@ -2,7 +2,7 @@ package mongo
 
 import (
 	"context"
-	"github.com/elwafa/tavern/domain/customer"
+	"github.com/elwafa/tavern/internal/app/domain/customer"
 	"time"
 
 	"github.com/google/uuid"
